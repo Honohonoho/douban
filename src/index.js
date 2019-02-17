@@ -4,16 +4,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import { createBottomTabNavigator, createStackNavigator, createAppContainer } from 'react-navigation';
 
 import Mine from './components/Mine'
-
-class HomeScreen extends React.Component {
-    render() {
-        return (
-            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                <Text>movieList!</Text>
-            </View>
-        );
-    }
-}
+import MovieList from './components/MovieList'
 
 class MovieSeek extends React.Component {
     render() {
@@ -28,7 +19,7 @@ class MovieSeek extends React.Component {
 const TabNavigator = createBottomTabNavigator(
     {
         MovieHome: {
-            screen: HomeScreen,
+            screen: MovieList,
             navigationOptions: {
                 tabBarLabel: '热映',
             }
