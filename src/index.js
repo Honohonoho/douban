@@ -1,57 +1,75 @@
 import React from 'react';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import { Text, View } from 'react-native';
-import { createBottomTabNavigator, createAppContainer } from 'react-navigation';
+import Icon from 'react-native-vector-icons/Ionicons';
+import { StyleSheet, Text, View } from 'react-native';
+import { createBottomTabNavigator, createStackNavigator, createAppContainer } from 'react-navigation';
 
 class HomeScreen extends React.Component {
-  render() {
-    return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text>Home!</Text>
-      </View>
-    );
-  }
+    render() {
+        return (
+            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                <Text>movieList!</Text>
+            </View>
+        );
+    }
 }
 
-class SettingsScreen extends React.Component {
-  render() {
-    return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text>Settings!</Text>
-      </View>
-    );
-  }
+class MovieSeek extends React.Component {
+    render() {
+        return (
+            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                <Text>MovieSeek!</Text>
+            </View>
+        );
+    }
+}
+
+class Mine extends React.Component {
+    render() {
+        return (
+            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                <Text>mine!</Text>
+            </View>
+        );
+    }
 }
 
 const TabNavigator = createBottomTabNavigator(
-  {
-    Home: HomeScreen,
-    Settings: SettingsScreen,
-  },
-  {
-    defaultNavigationOptions: ({ navigation }) => ({
-      tabBarIcon: ({ focused, horizontal, tintColor }) => {
-        const { routeName } = navigation.state;
-        let IconComponent = Ionicons;
-        let iconName;
-        if (routeName === 'Home') {
-          iconName = `ios-information-circle${focused ? '' : '-outline'}`;
-          // Sometimes we want to add badges to some icons. 
-          // You can check the implementation below.
-          // IconComponent = HomeIconWithBadge; 
-        } else if (routeName === 'Settings') {
-          iconName = `ios-options${focused ? '' : '-outline'}`;
-        }
-
-        // You can return any component that you like here!
-        return <IconComponent name={iconName} size={25} color={tintColor} />;
-      },
-    }),
-    tabBarOptions: {
-      activeTintColor: 'tomato',
-      inactiveTintColor: 'gray',
+    {
+        MovieHome: {
+            screen: HomeScreen,
+            navigationOptions: {
+                tabBarLabel: '热映',
+            }
+        },
+        MovieSeek: {
+            screen: MovieSeek,
+            navigationOptions: {
+                tabBarLabel: '找片',
+            }
+        },
+        Mine: {
+            screen: Mine,
+            navigationOptions: {
+                tabBarLabel: '我的',
+            }
+        },
     },
-  }
+    {
+        tabBarOptions: {
+            activeTintColor: '#494949',
+            inactiveTintColor: '#999999',
+            labelStyle: {
+                fontSize: 12,
+                marginBottom: 5,
+            },
+            style: {
+                borderTopWidth: 1,
+                borderTopColor: '#c3c3c3',
+                height: 50,
+                backgroundColor: '#fff'
+            },
+        }
+    }
 );
 
 export default createAppContainer(TabNavigator);
