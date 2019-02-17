@@ -3,6 +3,8 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { StyleSheet, Text, View } from 'react-native';
 import { createBottomTabNavigator, createStackNavigator, createAppContainer } from 'react-navigation';
 
+import Mine from './components/Mine'
+
 class HomeScreen extends React.Component {
     render() {
         return (
@@ -18,16 +20,6 @@ class MovieSeek extends React.Component {
         return (
             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                 <Text>MovieSeek!</Text>
-            </View>
-        );
-    }
-}
-
-class Mine extends React.Component {
-    render() {
-        return (
-            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                <Text>mine!</Text>
             </View>
         );
     }
