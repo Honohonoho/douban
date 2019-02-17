@@ -5,16 +5,7 @@ import { createBottomTabNavigator, createStackNavigator, createAppContainer } fr
 
 import Mine from './components/Mine'
 import MovieList from './components/MovieList'
-
-class MovieSeek extends React.Component {
-    render() {
-        return (
-            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                <Text>MovieSeek!</Text>
-            </View>
-        );
-    }
-}
+import MovieSeek from './components/MovieSeek'
 
 const TabNavigator = createBottomTabNavigator(
     {
