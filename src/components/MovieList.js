@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 
+import ShowingAndUpcomingMovie from './ShowingAndUpcomingMovie';
 export default class MovieList extends Component {
     constructor(props) {
         super(props)
@@ -8,9 +9,9 @@ export default class MovieList extends Component {
     render() {
         return (
             <View>
-                <Text>
-                    Movie List page
-                </Text>
+                <ShowingAndUpcomingMovie>
+                    
+                </ShowingAndUpcomingMovie>
             </View>
         )
     }
