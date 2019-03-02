@@ -14,30 +14,68 @@ export default class OnShowingMovieList extends Component {
         this.state = {
             movieList: []
         }
-        // this.fetchData = this.fetchData.bind(this)
+        this.fetchData = this.fetchData.bind(this)
     }
     componentDidMount() {
-
+        this.fetchData()
+    }
+    fetchData() {
+        const OnShowingMovieListAPI = 'https://api.douban.com/v2/movie/in_theaters'
+        fetch(OnShowingMovieListAPI)
+            .then((response) => {
+                return response.json()
+            })
+            .then((res) => {
+                let movieListData = res.subjects
+                movieListData.map((item, index) => {
+                    item.index = index
+                })
+                console.log(res)
+                this.setState({
+                    movieList: movieListData
+                })
+            })
+            .catch((error) => {
+                console.error(error)
+            })
+    }
+    concatCastName(casts) {
+        let nameString = casts.map((item) => {
+            return item.name
+        }).join(' / ')
+        return nameString
     }
     render() {
-        const resData = {
-            thumb: 'https://ss2.baidu.com/6ONYsjip0QIZ8tyhnq/it/u=3226414784,104165376&fm=58&bpow=640&bpoh=1000',
-
-        }
+        const OnShowingMovieListAPI = 'https://api.douban.com/v2/movie/in_theaters'
+        let movieList = this.state.movieList
         return (
-            <View style={styles.movieItemWrap}>
-                <View style={styles.movieThumbWrap}>
-                    <Image
-                        source={{uri: resData.thumb}}
-                        style={styles.movieThumb}
-                    >
-                    </Image>
-                </View>
-                <View style={styles.movieInfoWrap}>
-                    <Text style={styles.movieTitle}>疯狂的外星人</Text>
-                    <Text style={styles.secondaryFont}>导演：宁浩</Text>
-                    <Text style={styles.secondaryFont}>主演：王宝强</Text>
-                </View>
+            <View style={styles.movieListWrap}>
+                <FlatList
+                    data={movieList}
+                    key={movieList.key}
+                    renderItem={({item}) => {
+                        return (
+                            <View style={styles.movieItemWrap}>
+                                <View style={styles.movieThumbWrap}>
+                                    <Image source={{uri: item.images.large}} style={styles.movieThumb}></Image>
+                                </View>
+                                <View style={styles.movieInfoWrap}>
+                                    <Text style={styles.movieTitle}>{item.title}</Text>
+                                    <Text style={styles.movieStar}>XXX</Text>
+                                    <Text style={styles.secondaryFont}>导演：{item.directors[0].name}</Text>
+                                    <Text style={styles.secondaryFont}>主演：{this.concatCastName(item.casts)}</Text>
+                                </View>
+                                <View style={styles.movieBuyTicketWrap}>
+                                    <Text style={styles.movieViewCount}>{item.collect_count}人看过</Text>
+                                    <View style={styles.buyTicketButtonWrap}>
+                                        <Text style={styles.buyTicketButton}>购票</Text>
+                                    </View>
+                                </View>
+                            </View>
+                        )
+                    }}
+                >
+                </FlatList>
             </View>
         )
     }
@@ -45,21 +83,25 @@ export default class OnShowingMovieList extends Component {
 
 const styles = StyleSheet.create({
     secondaryFont: {
-        lineHeight: 18,
+        lineHeight: 16,
         color: '#A6A6A6',
         fontSize: 10
     },
+    movieListWrap: {
+
+    },
     movieItemWrap: {
         height: 130,
-        paddingLeft: 10,
-        paddingRight: 10,
+        paddingLeft: 15,
+        paddingRight: 15,
         flexDirection: 'row',
         alignItems: 'center',
+        justifyContent: 'space-between',
         borderBottomWidth: 1,
         borderBottomColor: '#EFEFEF'
     },  
     movieThumbWrap: {
-        flex: 1
+        flex: 0
     },
     movieThumb: {
         width: 80,
@@ -67,12 +109,40 @@ const styles = StyleSheet.create({
     },
     movieInfoWrap: {
         height: 100,
-        flex: 2,
-        alignItems: 'flex-start'
+        flex: 1,
+        alignItems: 'flex-start',
+        marginLeft: 15
     },
     movieTitle: {
         fontWeight: '600',
         fontSize: 16
+    },
+    movieBuyTicketWrap: {
+        width: 80,
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginLeft: 'auto'
+    },
+    buyTicketButtonWrap: {
+        width: 60,
+        height: 30,
+        marginTop: 3,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderWidth: 1,
+        borderColor: '#ff4d64',
+        borderRadius: 5,
+        fontSize: 12,
+    },
+    movieViewCount: {
+        lineHeight: 16,
+        fontSize: 10,
+        color: '#ff4d64'
+    },
+    buyTicketButton: {
+        color: '#FF4E65',
+        fontSize: 14,
+        fontWeight: '600',
     }
-    
 })
