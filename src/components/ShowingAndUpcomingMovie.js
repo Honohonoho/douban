@@ -7,7 +7,8 @@ import {
 } from 'react-native';
 import ScrollableTabView, { DefaultTabBar } from 'react-native-scrollable-tab-view';
 
-import OnShowingMovieList from './OnShowingMovie';
+import OnShowingMovieList from './OnShowingMovie'
+import UpcomingMovieList from './UpcomingMovie'
 
 const { width, height } = Dimensions.get('window') // 获取设备宽高
 export default class ShowingAndUpcomingMovie extends Component {
@@ -35,7 +36,7 @@ export default class ShowingAndUpcomingMovie extends Component {
                         <OnShowingMovieList></OnShowingMovieList>
                     </View> 
                     <View tabLabel='即将上映' style={styles.tabItemWrap}>
-                        <Text>即将上映</Text>
+                        <UpcomingMovieList></UpcomingMovieList>
                     </View>
                 </ScrollableTabView>
             </View>
