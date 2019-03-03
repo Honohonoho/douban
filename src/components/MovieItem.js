@@ -5,40 +5,17 @@ import {
   Text,
   View,
   Image,
-  FlatList
 } from 'react-native';
-import MovieItem from './MovieItem'
 
-export default class OnShowingMovieList extends Component {
+export default class MovieItem extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            movieList: []
+            item: this.props.data
         }
-        this.fetchData = this.fetchData.bind(this)
     }
     componentDidMount() {
-        this.fetchData()
-    }
-    fetchData() {
-        const OnShowingMovieListAPI = 'https://api.douban.com/v2/movie/in_theaters'
-        fetch(OnShowingMovieListAPI)
-            .then((response) => {
-                return response.json()
-            })
-            .then((res) => {
-                let movieListData = res.subjects
-                movieListData.map((item, index) => {
-                    item.index = index
-                })
-                console.log(res)
-                this.setState({
-                    movieList: movieListData
-                })
-            })
-            .catch((error) => {
-                console.error(error)
-            })
+        
     }
     concatCastName(casts) {
         let nameString = casts.map((item) => {
@@ -50,19 +27,24 @@ export default class OnShowingMovieList extends Component {
         return count > 10000 ? (count/10000).toFixed(1) + '万' : count
     }
     render() {
-        let movieList = this.state.movieList
+        let item = this.state.item
         return (
-            <View style={styles.movieListWrap}>
-                <FlatList
-                    data={movieList}
-                    keyExtractor={item => item.index}
-                    renderItem={({item}) => {
-                        return (
-                            <MovieItem data={item}></MovieItem>
-                        )
-                    }}
-                >
-                </FlatList>
+            <View style={styles.movieItemWrap}>
+                <View style={styles.movieThumbWrap}>
+                    <Image source={{uri: item.images.large}} style={styles.movieThumb}></Image>
+                </View>
+                <View style={styles.movieInfoWrap}>
+                    <Text style={styles.movieTitle}>{item.title}</Text>
+                    <Text style={styles.movieStar}>XXX</Text>
+                    <Text style={styles.secondaryFont}>导演：{item.directors[0].name}</Text>
+                    <Text style={styles.secondaryFont}>主演：{this.concatCastName(item.casts)}</Text>
+                </View>
+                <View style={styles.movieBuyTicketWrap}>
+                    <Text style={styles.movieViewCount}>{this.formatViewCount(item.collect_count)}人看过</Text>
+                    <View style={styles.buyTicketButtonWrap}>
+                        <Text style={styles.buyTicketButton}>购票</Text>
+                    </View>
+                </View>
             </View>
         )
     }
@@ -73,9 +55,6 @@ const styles = StyleSheet.create({
         lineHeight: 16,
         color: '#A6A6A6',
         fontSize: 10
-    },
-    movieListWrap: {
-
     },
     movieItemWrap: {
         height: 130,
