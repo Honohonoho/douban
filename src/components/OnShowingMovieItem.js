@@ -7,7 +7,7 @@ import {
   Image,
 } from 'react-native';
 
-export default class MovieItem extends Component {
+export default class OnShowingMovieItem extends Component {
     constructor(props) {
         super(props)
         this.state = {

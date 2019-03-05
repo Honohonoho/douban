@@ -7,7 +7,7 @@ import {
   Image,
   FlatList
 } from 'react-native';
-import MovieItem from './MovieItem'
+import OnShowingMovieItem from './OnShowingMovieItem'
 
 export default class OnShowingMovieList extends Component {
     constructor(props) {
@@ -31,7 +31,7 @@ export default class OnShowingMovieList extends Component {
                 movieListData.map((item, index) => {
                     item.index = index
                 })
-                console.log(res)
+                // console.log(res)
                 this.setState({
                     movieList: movieListData
                 })
@@ -55,10 +55,10 @@ export default class OnShowingMovieList extends Component {
             <View style={styles.movieListWrap}>
                 <FlatList
                     data={movieList}
-                    keyExtractor={item => item.index}
+                    keyExtractor={item => item.index.toString()}
                     renderItem={({item}) => {
                         return (
-                            <MovieItem data={item}></MovieItem>
+                            <OnShowingMovieItem data={item}></OnShowingMovieItem>
                         )
                     }}
                 >

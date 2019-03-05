@@ -1,44 +1,21 @@
-// 即将上映电影列表
+// 正在上映电影列表
 import React, { Component } from 'react';
 import {
   StyleSheet,
   Text,
   View,
   Image,
-  FlatList
 } from 'react-native';
-import UpcomingMovieItem from './UpcomingMovieItem'
 
-export default class UpcomingMovieList extends Component {
+export default class UpcomingMovieItem extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            movieList: []
+            item: this.props.data
         }
-        this.fetchData = this.fetchData.bind(this)
     }
     componentDidMount() {
-        this.fetchData()
-    }
-    fetchData() {
-        const UpcomingMovieList = 'https://api.douban.com/v2/movie/coming_soon'
-        fetch(UpcomingMovieList)
-            .then((response) => {
-                return response.json()
-            })
-            .then((res) => {
-                let movieListData = res.subjects
-                movieListData.map((item, index) => {
-                    item.index = index
-                })
-                console.log(res)
-                this.setState({
-                    movieList: movieListData
-                })
-            })
-            .catch((error) => {
-                console.error(error)
-            })
+        
     }
     concatCastName(casts) {
         let nameString = casts.map((item) => {
@@ -50,23 +27,23 @@ export default class UpcomingMovieList extends Component {
         return count > 10000 ? (count/10000).toFixed(1) + '万' : count
     }
     render() {
-        let movieList = this.state.movieList
+        let item = this.state.item
         return (
-            <View style={styles.tabContainerWrap}>
-                <View style={styles.sectionWrap}>
-
+            <View style={styles.movieItemWrap}>
+                <View style={styles.movieThumbWrap}>
+                    <Image source={{uri: item.images.large}} style={styles.movieThumb}></Image>
                 </View>
-                <View style={styles.movieListWrap}>
-                    <FlatList
-                        data={movieList}
-                        keyExtractor={item => item.index.toString()}
-                        renderItem={({item}) => {
-                            return (
-                                <UpcomingMovieItem data={item}></UpcomingMovieItem>
-                            )
-                        }}
-                    >
-                    </FlatList>
+                <View style={styles.movieInfoWrap}>
+                    <Text style={styles.movieTitle}>{item.title}</Text>
+                    <Text style={styles.movieStar}>XXX</Text>
+                    <Text style={styles.secondaryFont}>导演：{item.directors[0].name}</Text>
+                    <Text style={styles.secondaryFont}>主演：{this.concatCastName(item.casts)}</Text>
+                </View>
+                <View style={styles.movieSubscribeWrap}>
+                    <Text style={styles.movieSubscribeCount}>{this.formatViewCount(item.collect_count)}人想看</Text>
+                    <View style={styles.subscribeButtonWrap}>
+                        <Text style={styles.subscribeButton}>想看</Text>
+                    </View>
                 </View>
             </View>
         )
@@ -78,9 +55,6 @@ const styles = StyleSheet.create({
         lineHeight: 16,
         color: '#A6A6A6',
         fontSize: 10
-    },
-    movieListWrap: {
-
     },
     movieItemWrap: {
         height: 130,
@@ -110,31 +84,31 @@ const styles = StyleSheet.create({
         fontSize: 16,
         color: '#333'
     },
-    movieBuyTicketWrap: {
+    movieSubscribeWrap: {
         width: 80,
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
         marginLeft: 'auto'
     },
-    buyTicketButtonWrap: {
+    subscribeButtonWrap: {
         width: 60,
         height: 30,
         marginTop: 3,
         alignItems: 'center',
         justifyContent: 'center',
         borderWidth: 1,
-        borderColor: '#ff4d64',
+        borderColor: '#FFAE31',
         borderRadius: 5,
         fontSize: 12,
     },
-    movieViewCount: {
+    movieSubscribeCount: {
         lineHeight: 16,
         fontSize: 10,
-        color: '#ff4d64'
+        color: '#FFAE31'
     },
-    buyTicketButton: {
-        color: '#FF4E65',
+    subscribeButton: {
+        color: '#FFAE31',
         fontSize: 14,
         fontWeight: '600',
     }
