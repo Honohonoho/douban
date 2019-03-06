@@ -51,10 +51,20 @@ export default class UpcomingMovieList extends Component {
     }
     render() {
         let movieList = this.state.movieList
+        const month = new Date().getMonth() + 1
         return (
             <View style={styles.tabContainerWrap}>
                 <View style={styles.sectionWrap}>
-
+                    <View style={styles.leftSectionWrap}>
+                        <Text style={styles.sectionText}>全部</Text>
+                        <Text style={styles.sectionText}>{`${month}月`}</Text>
+                        <Text style={styles.sectionText}>{`${month+1}月`}</Text>
+                        <Text style={styles.sectionText}>{`${month+2}月`}</Text>
+                    </View>
+                    <View style={styles.rightSectionWrap}>
+                        <Text style={styles.sectionText}>时间</Text>
+                        <Text style={styles.sectionText}>热度</Text>
+                    </View>
                 </View>
                 <View style={styles.movieListWrap}>
                     <FlatList
@@ -78,6 +88,37 @@ const styles = StyleSheet.create({
         lineHeight: 16,
         color: '#A6A6A6',
         fontSize: 10
+    },
+    sectionWrap: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        paddingLeft: 15,
+        paddingRight: 15,
+        marginTop: 15,
+        marginBottom: 15
+    },
+    leftSectionWrap: {
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        alignItems: 'center'
+    },
+    rightSectionWrap: {
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        paddingTop: 3,
+        paddingBottom: 3,
+        paddingLeft: 10, 
+        borderLeftWidth: 1,
+        borderLeftColor: '#A6A6A6'
+    },
+    sectionText: {
+        lineHeight: 16,
+        color: '#A6A6A6',
+        marginRight: 10,
+    },
+    sectionTextActive: {
+        color: '#333'
     },
     movieListWrap: {
 
