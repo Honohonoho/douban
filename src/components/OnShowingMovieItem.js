@@ -7,6 +7,8 @@ import {
   Image,
 } from 'react-native';
 
+import RateStar from './RateStar'
+
 export default class OnShowingMovieItem extends Component {
     constructor(props) {
         super(props)
@@ -35,7 +37,8 @@ export default class OnShowingMovieItem extends Component {
                 </View>
                 <View style={styles.movieInfoWrap}>
                     <Text style={styles.movieTitle}>{item.title}</Text>
-                    <Text style={styles.movieStar}>XXX</Text>
+                    <RateStar rate={item.rating}></RateStar>
+                    {/* <Text style={styles.movieStar}>XXX</Text> */}
                     <Text style={styles.secondaryFont}>导演：{item.directors[0].name}</Text>
                     <Text style={styles.secondaryFont}>主演：{this.concatCastName(item.casts)}</Text>
                 </View>

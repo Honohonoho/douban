@@ -4,9 +4,9 @@ import {
   StyleSheet,
   Text,
   View,
-  Image,
   FlatList
 } from 'react-native';
+
 import OnShowingMovieItem from './OnShowingMovieItem'
 
 export default class OnShowingMovieList extends Component {
@@ -31,7 +31,7 @@ export default class OnShowingMovieList extends Component {
                 movieListData.map((item, index) => {
                     item.index = index
                 })
-                // console.log(res)
+                console.log(res)
                 this.setState({
                     movieList: movieListData
                 })
