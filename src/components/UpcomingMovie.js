@@ -94,8 +94,8 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         paddingLeft: 15,
         paddingRight: 15,
-        marginTop: 15,
-        marginBottom: 15
+        marginTop: 10,
+        marginBottom: 10
     },
     leftSectionWrap: {
         flexDirection: 'row',

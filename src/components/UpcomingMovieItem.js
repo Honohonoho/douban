@@ -29,20 +29,25 @@ export default class UpcomingMovieItem extends Component {
     render() {
         let item = this.state.item
         return (
-            <View style={styles.movieItemWrap}>
-                <View style={styles.movieThumbWrap}>
-                    <Image source={{uri: item.images.large}} style={styles.movieThumb}></Image>
+            <View style={styles.movieItemContainer}>
+                <View style={styles.movieComingDateWrap}>
+                    <Text style={styles.movieComingDate}>{item.year}</Text>
                 </View>
-                <View style={styles.movieInfoWrap}>
-                    <Text style={styles.movieTitle}>{item.title}</Text>
-                    <Text style={styles.movieStar}>XXX</Text>
-                    <Text style={styles.secondaryFont}>导演：{item.directors[0].name}</Text>
-                    <Text style={styles.secondaryFont}>主演：{this.concatCastName(item.casts)}</Text>
-                </View>
-                <View style={styles.movieSubscribeWrap}>
-                    <Text style={styles.movieSubscribeCount}>{this.formatViewCount(item.collect_count)}人想看</Text>
-                    <View style={styles.subscribeButtonWrap}>
-                        <Text style={styles.subscribeButton}>想看</Text>
+                <View style={styles.movieItemWrap}>
+                    <View style={styles.movieThumbWrap}>
+                        <Image source={{uri: item.images.large}} style={styles.movieThumb}></Image>
+                    </View>
+                    <View style={styles.movieInfoWrap}>
+                        <Text style={styles.movieTitle}>{item.title}</Text>
+                        <Text style={styles.movieStar}>XXX</Text>
+                        <Text style={styles.secondaryFont}>导演：{item.directors[0].name}</Text>
+                        <Text style={styles.secondaryFont}>主演：{this.concatCastName(item.casts)}</Text>
+                    </View>
+                    <View style={styles.movieSubscribeWrap}>
+                        <Text style={styles.movieSubscribeCount}>{this.formatViewCount(item.collect_count)}人想看</Text>
+                        <View style={styles.subscribeButtonWrap}>
+                            <Text style={styles.subscribeButton}>想看</Text>
+                        </View>
                     </View>
                 </View>
             </View>
@@ -56,6 +61,20 @@ const styles = StyleSheet.create({
         color: '#A6A6A6',
         fontSize: 10
     },
+    movieItemContainer: {
+
+    },
+    movieComingDateWrap: {
+        paddingLeft: 15,
+        paddingTop: 8,
+        paddingBottom: 8,
+        backgroundColor: '#eee'
+    },
+    movieComingDate: {
+        fontSize: 14,
+        lineHeight: 14,
+        color: '#A6A6A6'
+    },
     movieItemWrap: {
         height: 130,
         paddingLeft: 15,
@@ -63,8 +82,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
-        borderBottomWidth: 1,
-        borderBottomColor: '#EFEFEF'
     },  
     movieThumbWrap: {
         flex: 0
