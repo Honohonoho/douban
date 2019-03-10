@@ -1,11 +1,12 @@
 import React from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Easing, Animated } from 'react-native';
 import { createBottomTabNavigator, createStackNavigator, createAppContainer } from 'react-navigation';
 
 import Mine from './components/Mine'
 import MovieList from './components/MovieList'
 import MovieSeek from './components/MovieSeek'
+import MovieDetail from './components/MovieDetail'
 
 const TabNavigator = createBottomTabNavigator(
     {
@@ -45,5 +46,49 @@ const TabNavigator = createBottomTabNavigator(
         }
     }
 );
+const MyApp = createStackNavigator(
+    {
+        // 主页
+        Home: {
+            screen: TabNavigator,
+            navigationOptions: {
+                header: null
+            }
+        },
+        MovieDetail, // 电影详情页
+    },
+    {
+        headerMode: 'screen',
+        // headerMode: 'none',
+        mode: 'modal',
+        navigationOptions: {
+            gesturesEnabled: false,
+        },
+        transitionConfig: () => ({
+            transitionSpec: {
+                duration: 300,
+                easing: Easing.out(Easing.poly(4)),
+                timing: Animated.timing,
+            },
+            screenInterpolator: sceneProps => {
+                const { layout, position, scene } = sceneProps;
+                const { index } = scene;
 
-export default createAppContainer(TabNavigator);
+                const width = layout.initWidth;
+                const translateX = position.interpolate({
+                    inputRange: [index - 1, index, index + 1],
+                    outputRange: [width, 0, 0],
+                });
+
+                const opacity = position.interpolate({
+                    inputRange: [index - 1, index - 0.99, index],
+                    outputRange: [0, 1, 1],
+                });
+
+                return { opacity, transform: [{ translateX }] };
+            },
+        })
+    }
+)
+
+export default createAppContainer(MyApp)

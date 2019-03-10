@@ -33,10 +33,10 @@ export default class ShowingAndUpcomingMovie extends Component {
                     locked={false}
                 >
                     <View tabLabel='正在热映' style={styles.tabItemWrap}>
-                        <OnShowingMovieList></OnShowingMovieList>
+                        <OnShowingMovieList navigation={this.props.navigation}></OnShowingMovieList>
                     </View> 
                     <View tabLabel='即将上映' style={styles.tabItemWrap}>
-                        <UpcomingMovieList></UpcomingMovieList>
+                        <UpcomingMovieList navigation={this.props.navigation}></UpcomingMovieList>
                     </View>
                 </ScrollableTabView>
             </View>

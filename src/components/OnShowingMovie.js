@@ -4,7 +4,8 @@ import {
   StyleSheet,
   Text,
   View,
-  FlatList
+  FlatList,
+  Button
 } from 'react-native';
 
 import OnShowingMovieItem from './OnShowingMovieItem'
@@ -40,19 +41,18 @@ export default class OnShowingMovieList extends Component {
                 console.error(error)
             })
     }
-    concatCastName(casts) {
-        let nameString = casts.map((item) => {
-            return item.name
-        }).join(' / ')
-        return nameString
-    }
-    formatViewCount(count) {
-        return count > 10000 ? (count/10000).toFixed(1) + '万' : count
+    alert() {
+        console.log(this)
+        this.props.navigation.navigate('MovieDetail')
     }
     render() {
         let movieList = this.state.movieList
         return (
             <View style={styles.movieListWrap}>
+            <Button
+                title="Go to Details"
+                onPress={this.alert.bind(this)}
+                />
                 <FlatList
                     data={movieList}
                     keyExtractor={item => item.index.toString()}

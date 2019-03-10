@@ -31,7 +31,9 @@ export default class OnShowingMovieItem extends Component {
     render() {
         let item = this.state.item
         return (
-            <View style={styles.movieItemWrap}>
+            <View
+                style={styles.movieItemWrap}
+            >
                 <View style={styles.movieThumbWrap}>
                     <Image source={{uri: item.images.large}} style={styles.movieThumb}></Image>
                 </View>

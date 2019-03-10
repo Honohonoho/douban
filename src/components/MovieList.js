@@ -9,8 +9,9 @@ export default class MovieList extends Component {
     render() {
         return (
             <View>
-                <ShowingAndUpcomingMovie>
-                    
+                <ShowingAndUpcomingMovie
+                    navigation={this.props.navigation}
+                >
                 </ShowingAndUpcomingMovie>
             </View>
         )
