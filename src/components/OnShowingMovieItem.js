@@ -38,7 +38,6 @@ export default class OnShowingMovieItem extends Component {
                 <View style={styles.movieInfoWrap}>
                     <Text style={styles.movieTitle}>{item.title}</Text>
                     <RateStar rate={item.rating}></RateStar>
-                    {/* <Text style={styles.movieStar}>XXX</Text> */}
                     <Text style={styles.secondaryFont}>导演：{item.directors[0].name}</Text>
                     <Text style={styles.secondaryFont}>主演：{this.concatCastName(item.casts)}</Text>
                 </View>

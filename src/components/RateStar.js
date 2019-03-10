@@ -49,7 +49,7 @@ export default class RateStar extends Component {
         return (
             <View style={styles.rateStarWrap}>
                 {this.renderStar(this.props.rate)}
-                <Text style={styles.rateRecord}>{this.props.rate.average}</Text>
+                <Text style={styles.rateRecord}>{this.props.rate.average === 0 ? null : this.props.rate.average}</Text>
             </View>
         )
     }
