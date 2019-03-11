@@ -39,7 +39,7 @@ const TabNavigator = createBottomTabNavigator(
             },
             style: {
                 borderTopWidth: 1,
-                borderTopColor: '#c3c3c3',
+                borderTopColor: '#EFEFEF',
                 height: 50,
                 backgroundColor: '#fff'
             },

@@ -5,6 +5,7 @@ import {
   Text,
   View,
   Image,
+  TouchableHighlight
 } from 'react-native';
 
 import RateStar from './RateStar'
@@ -13,7 +14,6 @@ export default class UpcomingMovieItem extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            item: this.props.data
         }
     }
     componentDidMount() {
@@ -28,31 +28,36 @@ export default class UpcomingMovieItem extends Component {
     formatViewCount(count) {
         return count > 10000 ? (count/10000).toFixed(1) + '万' : count
     }
+    handleMovieItemPress() {
+        this.props.navigation.navigate('MovieDetail')
+    }
     render() {
-        let item = this.state.item
+        let item = this.props.data
         return (
-            <View style={styles.movieItemContainer}>
-                <View style={styles.movieComingDateWrap}>
-                    <Text style={styles.movieComingDate}>{item.year}</Text>
-                </View>
-                <View style={styles.movieItemWrap}>
-                    <View style={styles.movieThumbWrap}>
-                        <Image source={{uri: item.images.large}} style={styles.movieThumb}></Image>
+            <TouchableHighlight underlayColor={'#bbbbbb'} onPress={this.handleMovieItemPress.bind(this)}>
+                <View style={styles.movieItemContainer}>
+                    <View style={styles.movieComingDateWrap}>
+                        <Text style={styles.movieComingDate}>{item.year}</Text>
                     </View>
-                    <View style={styles.movieInfoWrap}>
-                        <Text style={styles.movieTitle}>{item.title}</Text>
-                        <RateStar rate={item.rating}></RateStar>
-                        <Text style={styles.secondaryFont}>导演：{item.directors[0].name}</Text>
-                        <Text style={styles.secondaryFont}>主演：{this.concatCastName(item.casts)}</Text>
-                    </View>
-                    <View style={styles.movieSubscribeWrap}>
-                        <Text style={styles.movieSubscribeCount}>{this.formatViewCount(item.collect_count)}人想看</Text>
-                        <View style={styles.subscribeButtonWrap}>
-                            <Text style={styles.subscribeButton}>想看</Text>
+                    <View style={styles.movieItemWrap}>
+                        <View style={styles.movieThumbWrap}>
+                            <Image source={{uri: item.images.large}} style={styles.movieThumb}></Image>
+                        </View>
+                        <View style={styles.movieInfoWrap}>
+                            <Text style={styles.movieTitle}>{item.title}</Text>
+                            <RateStar rate={item.rating}></RateStar>
+                            <Text style={styles.secondaryFont}>导演：{item.directors[0].name}</Text>
+                            <Text style={styles.secondaryFont}>主演：{this.concatCastName(item.casts)}</Text>
+                        </View>
+                        <View style={styles.movieSubscribeWrap}>
+                            <Text style={styles.movieSubscribeCount}>{this.formatViewCount(item.collect_count)}人想看</Text>
+                            <View style={styles.subscribeButtonWrap}>
+                                <Text style={styles.subscribeButton}>想看</Text>
+                            </View>
                         </View>
                     </View>
                 </View>
-            </View>
+            </TouchableHighlight>
         )
     }
 }

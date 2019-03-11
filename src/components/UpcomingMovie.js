@@ -13,7 +13,8 @@ export default class UpcomingMovieList extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            movieList: []
+            movieList: [],
+            total: 0
         }
         this.fetchData = this.fetchData.bind(this)
     }
@@ -28,12 +29,14 @@ export default class UpcomingMovieList extends Component {
             })
             .then((res) => {
                 let movieListData = res.subjects
+                let total = res.count
                 movieListData.map((item, index) => {
                     item.index = index
                 })
                 console.log(res)
                 this.setState({
-                    movieList: movieListData
+                    movieList: movieListData,
+                    total: total
                 })
             })
             .catch((error) => {
@@ -51,6 +54,7 @@ export default class UpcomingMovieList extends Component {
     }
     render() {
         let movieList = this.state.movieList
+        let total = this.state.total
         const month = new Date().getMonth() + 1
         return (
             <View style={styles.tabContainerWrap}>
@@ -72,7 +76,7 @@ export default class UpcomingMovieList extends Component {
                         keyExtractor={item => item.index.toString()}
                         renderItem={({item}) => {
                             return (
-                                <UpcomingMovieItem data={item}></UpcomingMovieItem>
+                                <UpcomingMovieItem data={item} total={total} navigation={this.props.navigation}></UpcomingMovieItem>
                             )
                         }}
                     >
@@ -121,7 +125,7 @@ const styles = StyleSheet.create({
         color: '#333'
     },
     movieListWrap: {
-
+        marginBottom: 200
     },
     movieItemWrap: {
         height: 130,

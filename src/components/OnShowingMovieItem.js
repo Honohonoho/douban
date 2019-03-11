@@ -5,6 +5,7 @@ import {
   Text,
   View,
   Image,
+  TouchableHighlight
 } from 'react-native';
 
 import RateStar from './RateStar'
@@ -12,12 +13,11 @@ import RateStar from './RateStar'
 export default class OnShowingMovieItem extends Component {
     constructor(props) {
         super(props)
-        this.state = {
-            item: this.props.data
+        this.state= {
+            activeIndex: undefined
         }
     }
     componentDidMount() {
-        
     }
     concatCastName(casts) {
         let nameString = casts.map((item) => {
@@ -28,28 +28,32 @@ export default class OnShowingMovieItem extends Component {
     formatViewCount(count) {
         return count > 10000 ? (count/10000).toFixed(1) + '万' : count
     }
+    handleMovieItemPress() {
+        this.props.navigation.navigate('MovieDetail')
+    }
     render() {
-        let item = this.state.item
+        let item = this.props.data
+        let total = this.props.total
         return (
-            <View
-                style={styles.movieItemWrap}
-            >
-                <View style={styles.movieThumbWrap}>
-                    <Image source={{uri: item.images.large}} style={styles.movieThumb}></Image>
-                </View>
-                <View style={styles.movieInfoWrap}>
-                    <Text style={styles.movieTitle}>{item.title}</Text>
-                    <RateStar rate={item.rating}></RateStar>
-                    <Text style={styles.secondaryFont}>导演：{item.directors[0].name}</Text>
-                    <Text style={styles.secondaryFont}>主演：{this.concatCastName(item.casts)}</Text>
-                </View>
-                <View style={styles.movieBuyTicketWrap}>
-                    <Text style={styles.movieViewCount}>{this.formatViewCount(item.collect_count)}人看过</Text>
-                    <View style={styles.buyTicketButtonWrap}>
-                        <Text style={styles.buyTicketButton}>购票</Text>
+            <TouchableHighlight underlayColor={'#bbbbbb'} onPress={this.handleMovieItemPress.bind(this)}>
+                <View style={[styles.movieItemWrap, item.index + 1 === total && styles.movieItemWrapLast]}>
+                    <View style={styles.movieThumbWrap}>
+                        <Image source={{uri: item.images.large}} style={styles.movieThumb}></Image>
+                    </View>
+                    <View style={styles.movieInfoWrap}>
+                        <Text style={styles.movieTitle}>{item.title}</Text>
+                        <RateStar rate={item.rating}></RateStar>
+                        <Text style={styles.secondaryFont}>导演：{item.directors[0].name}</Text>
+                        <Text style={styles.secondaryFont}>主演：{this.concatCastName(item.casts)}</Text>
+                    </View>
+                    <View style={styles.movieBuyTicketWrap}>
+                        <Text style={styles.movieViewCount}>{this.formatViewCount(item.collect_count)}人看过</Text>
+                        <View style={styles.buyTicketButtonWrap}>
+                            <Text style={styles.buyTicketButton}>购票</Text>
+                        </View>
                     </View>
                 </View>
-            </View>
+            </TouchableHighlight>
         )
     }
 }
@@ -68,8 +72,12 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-between',
         borderBottomWidth: 1,
-        borderBottomColor: '#EFEFEF'
-    },  
+        borderBottomColor: '#EFEFEF',
+        backgroundColor: '#ffffff'
+    },
+    movieItemWrapLast: {
+        borderBottomWidth: 0
+    },
     movieThumbWrap: {
         flex: 0
     },

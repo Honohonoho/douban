@@ -48,12 +48,12 @@ const styles = StyleSheet.create({
     movieListWrap: {
         width: width,
         height: height,
-        backgroundColor: '#ffffff'
+        backgroundColor: '#ffffff',
+        // marginBottom: 100
     },
     tabBarWrap: {
-        height: 50
     },
     tabItemWrap: {
-        marginBottom: 100,
+        // marginBottom: 100
     }
 })

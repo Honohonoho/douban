@@ -4,8 +4,7 @@ import {
   StyleSheet,
   Text,
   View,
-  FlatList,
-  Button
+  FlatList
 } from 'react-native';
 
 import OnShowingMovieItem from './OnShowingMovieItem'
@@ -14,7 +13,8 @@ export default class OnShowingMovieList extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            movieList: []
+            movieList: [],
+            total: 0
         }
         this.fetchData = this.fetchData.bind(this)
     }
@@ -29,36 +29,31 @@ export default class OnShowingMovieList extends Component {
             })
             .then((res) => {
                 let movieListData = res.subjects
+                let total = res.count
                 movieListData.map((item, index) => {
                     item.index = index
                 })
                 console.log(res)
                 this.setState({
-                    movieList: movieListData
+                    movieList: movieListData,
+                    total: total
                 })
             })
             .catch((error) => {
                 console.error(error)
             })
     }
-    alert() {
-        console.log(this)
-        this.props.navigation.navigate('MovieDetail')
-    }
     render() {
         let movieList = this.state.movieList
+        let total = this.state.total
         return (
             <View style={styles.movieListWrap}>
-            <Button
-                title="Go to Details"
-                onPress={this.alert.bind(this)}
-                />
                 <FlatList
                     data={movieList}
                     keyExtractor={item => item.index.toString()}
                     renderItem={({item}) => {
                         return (
-                            <OnShowingMovieItem data={item}></OnShowingMovieItem>
+                            <OnShowingMovieItem data={item} total={total} navigation={this.props.navigation}></OnShowingMovieItem>
                         )
                     }}
                 >
@@ -75,7 +70,7 @@ const styles = StyleSheet.create({
         fontSize: 10
     },
     movieListWrap: {
-
+        marginBottom: 75
     },
     movieItemWrap: {
         height: 130,
