@@ -49,7 +49,6 @@ export default class RateStar extends Component {
         return (
             <View style={styles.rateStarWrap}>
                 {this.renderStar(this.props.rate)}
-                <Text style={styles.rateRecord}>{this.props.rate.average === 0 ? null : this.props.rate.average}</Text>
             </View>
         )
     }
@@ -68,10 +67,5 @@ const styles = StyleSheet.create({
     star: {
         width: 10,
         height: 10
-    },
-    rateRecord: {
-        color: '#A6A6A6',
-        fontSize: 10,
-        marginLeft: 5
     }
 })

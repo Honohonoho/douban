@@ -45,7 +45,10 @@ export default class UpcomingMovieItem extends Component {
                         </View>
                         <View style={styles.movieInfoWrap}>
                             <Text style={styles.movieTitle}>{item.title}</Text>
-                            <RateStar rate={item.rating}></RateStar>
+                            <View style={styles.rateWrap}>
+                                <RateStar rate={item.rating}></RateStar>
+                                <Text style={styles.rateRecord}>{item.rating.average === 0 ? null : item.rating.average}</Text>
+                            </View>
                             <Text style={styles.secondaryFont}>导演：{item.directors[0].name}</Text>
                             <Text style={styles.secondaryFont}>主演：{this.concatCastName(item.casts)}</Text>
                         </View>
@@ -102,6 +105,16 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'flex-start',
         marginLeft: 15
+    },
+    rateWrap: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'flex-start'
+    },
+    rateRecord: {
+        color: '#A6A6A6',
+        fontSize: 10,
+        marginLeft: 5
     },
     movieTitle: {
         fontWeight: '600',

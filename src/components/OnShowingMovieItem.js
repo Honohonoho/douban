@@ -28,21 +28,24 @@ export default class OnShowingMovieItem extends Component {
     formatViewCount(count) {
         return count > 10000 ? (count/10000).toFixed(1) + '万' : count
     }
-    handleMovieItemPress() {
-        this.props.navigation.navigate('MovieDetail')
+    handleMovieItemPress(id) {
+        this.props.navigation.navigate('MovieDetail', {id: id})
     }
     render() {
         let item = this.props.data
         let total = this.props.total
         return (
-            <TouchableHighlight underlayColor={'#bbbbbb'} onPress={this.handleMovieItemPress.bind(this)}>
+            <TouchableHighlight underlayColor={'#bbbbbb'} onPress={this.handleMovieItemPress.bind(this, item.id)}>
                 <View style={[styles.movieItemWrap, item.index + 1 === total && styles.movieItemWrapLast]}>
                     <View style={styles.movieThumbWrap}>
                         <Image source={{uri: item.images.large}} style={styles.movieThumb}></Image>
                     </View>
                     <View style={styles.movieInfoWrap}>
                         <Text style={styles.movieTitle}>{item.title}</Text>
-                        <RateStar rate={item.rating}></RateStar>
+                        <View style={styles.rateWrap}>
+                            <RateStar rate={item.rating}></RateStar>
+                            <Text style={styles.rateRecord}>{item.rating.average === 0 ? null : item.rating.average}</Text>
+                        </View>
                         <Text style={styles.secondaryFont}>导演：{item.directors[0].name}</Text>
                         <Text style={styles.secondaryFont}>主演：{this.concatCastName(item.casts)}</Text>
                     </View>
@@ -95,6 +98,16 @@ const styles = StyleSheet.create({
         fontWeight: '600',
         fontSize: 16,
         color: '#333'
+    },
+    rateWrap: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'flex-start'
+    },
+    rateRecord: {
+        color: '#A6A6A6',
+        fontSize: 10,
+        marginLeft: 5
     },
     movieBuyTicketWrap: {
         width: 80,
