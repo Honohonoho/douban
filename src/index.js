@@ -5,7 +5,7 @@ import { createBottomTabNavigator, createStackNavigator, createAppContainer } fr
 
 import Mine from './components/Mine'
 import MovieList from './components/MovieList'
-import MovieSeek from './components/MovieSeek'
+import Seek from './components/Seek'
 import MovieDetail from './components/MovieDetail'
 
 const TabNavigator = createBottomTabNavigator(
@@ -16,8 +16,8 @@ const TabNavigator = createBottomTabNavigator(
                 tabBarLabel: '热映',
             }
         },
-        MovieSeek: {
-            screen: MovieSeek,
+        Seek: {
+            screen: Seek,
             navigationOptions: {
                 tabBarLabel: '找片',
             }
