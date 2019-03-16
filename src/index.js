@@ -14,22 +14,32 @@ const TabNavigator = createBottomTabNavigator(
             screen: MovieList,
             navigationOptions: {
                 tabBarLabel: '热映',
+                tabBarIcon: ({ tintColor }) => (
+                    <Icon name="ios-laptop" size={20} color={tintColor} />
+                ),
             }
         },
         Seek: {
             screen: Seek,
             navigationOptions: {
                 tabBarLabel: '找片',
+                tabBarIcon: ({ tintColor }) => (
+                    <Icon name="ios-eye" size={20} color={tintColor} />
+                ),
             }
         },
         Mine: {
             screen: Mine,
             navigationOptions: {
                 tabBarLabel: '我的',
+                tabBarIcon: ({ tintColor }) => (
+                    <Icon name="ios-person" size={20} color={tintColor} />
+                ),
             }
         },
     },
     {
+        initialRouteName: "MovieHome",
         tabBarOptions: {
             activeTintColor: '#494949',
             inactiveTintColor: '#999999',

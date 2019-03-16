@@ -10,7 +10,7 @@ import {
     TouchableOpacity
 } from 'react-native';
 
-// import Star from './Star';
+import RateStar from './RateStar'
 import Icon from "react-native-vector-icons/Ionicons";
 
 const { width, height } = Dimensions.get('window');
@@ -41,6 +41,8 @@ export default class SeekMovie extends Component {
             hotData,
             topData
         })
+        console.log('hotData',hotData)
+        console.log('topData',topData)
     }
     fetchHot = async () => { // 电影热榜    
         try {
@@ -110,7 +112,7 @@ export default class SeekMovie extends Component {
                                 </View>
                                 <View>
                                     <Text style={{ fontWeight: '600' }}>找电影</Text>
-                                    <Text style={{ fontSize: 12 }}>科幻/美国/治愈</Text>
+                                    <Text style={{ fontSize: 12 }}>豆瓣高分 / 美国 / 悬疑</Text>
                                 </View>
                                 <View>
                                     <Icon name="ios-arrow-forward" size={20} color={'red'} />
@@ -133,25 +135,49 @@ export default class SeekMovie extends Component {
                             contentContainerStyle={styles.contentContainer}
                             horizontal={true}
                             showsHorizontalScrollIndicator={false}
-                        >
-                            {hotData.map((item, index) => {
-                                return (
-                                    <View style={styles.hotItem} key={index.toString() + '' + item.title}>
-                                        <Image source={{
-                                            uri: item.images.large
-                                        }} style={{
-                                            width: 80,
-                                            height: 100
-                                        }} />
-                                        <View style={{ width: 80, justifyContent: 'flex-start' }}>
-                                            <Text style={[styles.smallFont, { marginTop: 3, fontWeight: '600', color: '#000' }]}>{item.title.slice(0, 6)}{item.title.length > 6 ? '...' : ''}</Text>
+                        >   
+                            <View style={styles.bestHostItemWrap}>
+                                {hotData.slice(0,3).map((item, index) => {
+                                    return (
+                                        <View style={styles.bestHotItem} key={index.toString() + '' + item.title}>
+                                            <Image source={{
+                                                uri: item.images.large
+                                            }} style={{
+                                                width: 100,
+                                                height: 125
+                                            }} />
+                                            <View style={{ width: 80, justifyContent: 'flex-start' }}>
+                                                <Text style={[styles.smallFont, { marginTop: 3, fontWeight: '600', color: '#000' }]}>{item.title.slice(0, 6)}{item.title.length > 6 ? '...' : ''}</Text>
+                                            </View>
+                                            <View style={styles.star}>
+                                                <RateStar rate={item.rating}></RateStar>
+                                                {item.rating.stars > 0 && <Text style={styles.smallFont}>{(item.rating.stars / 10).toFixed(1)}</Text>}
+                                            </View>
                                         </View>
-                                        <View style={styles.star}>
-                                            {/* <Star value={item.rating.stars} /> */}
-                                            {item.rating.stars > 0 && <Text style={styles.smallFont}>{(item.rating.stars / 10).toFixed(1)}</Text>}
+                                    )
+                                })}
+                            </View>
+                            <View style={styles.hostItemWrap}>
+                                {hotData.slice(3,).map((item, index) => {
+                                    return (
+                                        <View style={styles.hotItem} key={index.toString() + '' + item.title}>
+                                            <Image source={{
+                                                uri: item.images.large
+                                            }} style={{
+                                                width: 80,
+                                                height: 100
+                                            }} />
+                                            <View style={{ width: 80, justifyContent: 'flex-start' }}>
+                                                <Text style={[styles.smallFont, { marginTop: 3, fontWeight: '600', color: '#000' }]}>{item.title.slice(0, 6)}{item.title.length > 6 ? '...' : ''}</Text>
+                                            </View>
+                                            <View style={styles.star}>
+                                                <RateStar rate={item.rating}></RateStar>
+                                                {item.rating.stars > 0 && <Text style={styles.smallFont}>{(item.rating.stars / 10).toFixed(1)}</Text>}
+                                            </View>
                                         </View>
-                                    </View>)
-                            })}
+                                    )
+                                })}
+                            </View>
                         </ScrollView>
                         <View style={{ paddingLeft: 20 }}>
                             <Text>{this.renderSectionTitle(Math.round(offSetX))}</Text>
@@ -183,7 +209,7 @@ export default class SeekMovie extends Component {
                                             <View>
                                                 <Text>{item.title}</Text>
                                                 <View style={{ flexDirection: 'row' }}>
-                                                    {/* <Star value={item.rating.stars} /> */}
+                                                    <RateStar rate={item.rating}></RateStar>
                                                     {item.rating.stars > 0 && <Text style={styles.smallFont}>{(item.rating.stars / 10).toFixed(1)}</Text>}
                                                     <Text style={styles.smallFont}> {item.collect_count}人评价</Text>
                                                 </View>
@@ -208,7 +234,7 @@ export default class SeekMovie extends Component {
                                         <View style={styles.rightContent}>
                                             <Text>{item.title}</Text>
                                             <View style={{ flexDirection: 'row' }}>
-                                                {/* <Star value={item.rating.stars} /> */}
+                                                <RateStar rate={item.rating}></RateStar>
                                                 {item.rating.stars > 0 && <Text style={styles.smallFont}>{(item.rating.stars / 10).toFixed(1)}</Text>}
                                                 <Text style={styles.smallFont}> {item.collect_count}人评价</Text>
                                             </View>
@@ -230,11 +256,11 @@ export default class SeekMovie extends Component {
                                             <View>
                                                 <Text>{item.subject.title}</Text>
                                                 <View style={{ flexDirection: 'row' }}>
-                                                    {/* <Star value={item.subject.rating.stars} /> */}
+                                                    <RateStar rate={item.subject.rating}></RateStar>
                                                     {item.subject.rating.stars > 0 && <Text style={styles.smallFont}>{(item.subject.rating.stars / 10).toFixed(1)}</Text>}
                                                     <Text style={styles.smallFont}> {item.subject.collect_count}人评价</Text>
                                                 </View>
-                                            </View>
+                                            </View> 
                                             {index % 2 !== 0 && <View>
                                                 <Icon name="ios-arrow-round-up" size={20} color={'red'} />
                                             </View>}
@@ -279,14 +305,31 @@ const styles = StyleSheet.create({
     },
     contentContainer: {
         width: width * 2.88,
-        flexDirection: 'row',
-        flexWrap: 'wrap',
+        flexDirection: 'column',
         paddingVertical: 20,
+        paddingLeft: 15
+    },
+    bestHostItemWrap: {
+        width: width * 2.88,
+        flexDirection: 'row',
+        flexWrap: 'nowrap',
+    },
+    hostItemWrap: {
+        width: width * 2.88,
+        flexDirection: 'row',
+        flexWrap: 'nowrap',
+        paddingRight: 15
+    },
+    bestHotItem: {
+        width: 120,
+        flexDirection: 'column',
+        alignItems: 'flex-start',
+        justifyContent: 'center',
     },
     hotItem: {
         width: 110,
         flexDirection: 'column',
-        alignItems: 'center',
+        alignItems: 'flex-start',
         justifyContent: 'center',
     },
     smallFont: {
@@ -297,6 +340,7 @@ const styles = StyleSheet.create({
     star: {
         display: 'flex',
         flexDirection: 'row',
+        justifyContent: 'flex-start',
         marginTop: 3,
         marginBottom: 3,
     },
